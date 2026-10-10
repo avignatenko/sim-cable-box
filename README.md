@@ -2,28 +2,33 @@
 
 Parametric OpenSCAD model. Two printed parts: a body and a snap-on lid.
 
+| Assembled | Exploded |
+|---|---|
+| ![Assembled box](preview/assembled.png) | ![Box with the lid lifted off](preview/exploded.png) |
+
 ## Files
 
 | File | What it is |
 |---|---|
 | `sim_rig_cable_box.scad` | the model, all dimensions parametric |
-| `stl/sim_rig_cable_box_box.stl` | body, 40 × 160 × 47.6 default |
+| `stl/sim_rig_cable_box_box.stl` | body, 60 × 160 × 57.6 default |
 | `stl/sim_rig_cable_box_lid.stl` | lid, already oriented for printing (plate down) |
 
 ## Design
 
 - **Cable openings are open at the bottom edge** of the walls (mouse-hole style),
   so cables enter at floor level and the rim stays closed all the way round.
-  One 30 mm opening in each end wall (24 mm high) and one 20 mm opening in each
-  side wall (18 mm high). The arch tops have a 45° roof so they print without
+  One 30 mm opening in each end wall (30 mm high) and one 31 mm opening in each
+  side wall (30 mm high). The arch tops have a 45° roof so they print without
   supports.
 - **Lid**: inner lip in four flexing segments with a double-ramped snap detent per
   segment, plus four corner tabs that locate it lengthwise. Push on, pull off, no
   screws.
-- **Floor**: four zip-tie bridges (6 mm wide slots) to strap bundles down, and two
-  M6 through-holes (6.4 mm clearance) on 140 mm centres for T-nuts in 4040 extrusion.
+- **Floor**: two M6 through-holes (6.4 mm clearance) on 135 mm centres for T-nuts
+  in 4040 extrusion. Four zip-tie bridges (6 mm wide slots) to strap bundles down
+  are available but off by default (`anchors = true` to turn them on).
 - **Lid vents**: 15 slots, for power bricks that run warm.
-- Usable interior: 45.2 × 155.2 × 45.2 mm.
+- Usable interior: 55.2 × 155.2 × 55.2 mm.
 
 ## Printing
 
@@ -33,7 +38,7 @@ Both parts print flat with **no supports**.
 - Lid: as exported — plate on the bed, lip pointing up.
 - 0.2 mm layers, 3 perimeters, 20 % infill. PETG or ABS/ASA if the rig sits in a
   warm room or near a PSU; PLA is fine otherwise.
-- The snap lip is 1.9 mm thick and must flex ~0.45 mm. Don't print it at 0.3 mm
+- The snap lip is 1.9 mm thick and must flex ~0.65 mm. Don't print it at 0.3 mm
   layers with 4 perimeters — it gets stiff and brittle.
 
 ## Fit adjustment
@@ -41,8 +46,8 @@ Both parts print flat with **no supports**.
 If the lid is too tight or too loose, change one line at the top of the `.scad`:
 
 ```
-clr    = 0.25;   // raise to 0.35 if the lid won't seat, lower to 0.15 if it rattles
-snap_p = 0.7;    // detent height — lower for an easier open, raise for a firmer click
+clr    = 0.15;   // raise to 0.25–0.35 if the lid won't seat, lower if it rattles
+snap_p = 0.8;    // detent height — lower for an easier open, raise for a firmer click
 ```
 
 ## Other parameters worth knowing

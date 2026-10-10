@@ -1,6 +1,6 @@
 // =====================================================================
 //  Sim-rig cable management box
-//  Outer envelope: 50 (X, width) x 160 (Y, length) x 50 (Z, height)
+//  Outer envelope: 60 (X, width) x 160 (Y, length) x 60 (Z, height)
 //  incl. the lid. Snap-on lid, cable openings open at the bottom edge of
 //  the walls so cables enter at floor level.
 //
@@ -12,25 +12,26 @@
 part = "both";      // "box" | "lid" | "both" (print layout) | "assembled"
 
 // ---------- envelope ----------
-total_w   = 50;     // X
+total_w   = 60;     // X
 total_l   = 160;    // Y
-total_h   = 40;     // Z, lid included
+total_h   = 60;     // Z, lid included
 wall      = 2.4;    // side walls
 floor_t   = 2.4;    // bottom
 lid_t     = 2.4;    // lid plate
 corner_r  = 3.0;    // outer vertical corner radius
-clr       = 0.25;   // fit clearance - raise to 0.35 if your printer runs tight
+clr       = 0.15;   // fit clearance - raise to 0.35 if your printer runs tight
 
 // ---------- cable openings (all open at the bottom edge) ----------
-end_slot_w      = 30;   // in the two 50 mm end walls
-end_slot_depth  = 24;   // opening height, measured up from the bottom
-side_slot_w     = 20;   // in the two 160 mm side walls
-side_slot_depth = 18;
+end_slot_w      = 30;   // in the two 60 mm end walls
+end_slot_depth  = 30;   // opening height, measured up from the bottom
+side_slot_w     = 31;   // in the two 160 mm side walls - max: the gap between
+                        // the snap detents, so each detent keeps solid wall below
+side_slot_depth = 30;   // max: 4 mm below the bottom of the snap detents
 
 // ---------- lid lip + snap detent ----------
 lip_t     = 1.9;    // lip wall - thin enough to flex
 lip_h     = 16;     // how far the lip reaches into the box
-snap_p    = 0.7;    // detent height on the inner box wall
+snap_p    = 0.8;    // detent height on the inner box wall
 snap_h    = 3.0;    // detent length along Z
 snap_drop = 13.0;   // detent centre below the rim - keep near the lip tip,
                     // that is what keeps the flex strain low
@@ -40,9 +41,9 @@ tab_h     = 5;      // corner locating tabs on the lid
 
 // ---------- extras ----------
 vents         = true;   // ventilation slots in the lid
-anchors       = true;   // zip-tie bridges on the floor
+anchors       = false;   // zip-tie bridges on the floor
 mount_holes   = true;   // M6 through-holes for extrusion T-nuts
-mount_spacing = 140;
+mount_spacing = 135;
 mount_d       = 6.4;    // M6 clearance
 
 $fn = 72;
@@ -64,6 +65,11 @@ seg_c   = (seg_a + seg_b)/2;        // segment centre
 seg_l   = seg_b - seg_a;            // segment length
 snap_y   = seg_c;                   // detents sit mid-segment
 snap_len = seg_l - 8;
+
+assert(side_slot_w/2 <= snap_y - snap_len/2,
+       "side openings are wider than the gap between the snap detents");
+assert(side_slot_depth <= snap_z - 4,
+       "side openings reach too close to the snap detents");
 
 // =====================  helpers  =====================================
 module rbox(w, l, h, r) {                       // rounded-corner prism
